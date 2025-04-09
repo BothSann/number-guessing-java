@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,6 +8,11 @@ public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
+    private static int totalGamesPlayed = 0;
+    private static int minGuesses = Integer.MAX_VALUE;
+    private static int maxGuesses = 0;
+    private static int totalGuesses = 0;
+
 
     public static void main(String[] args) {
         boolean playAgain = true;
@@ -32,11 +38,46 @@ public class Main {
 
 
         while (!guessedCorrectly) {
+            int guess = getValidGuess(minRange, maxRange);
+            attempts++;
 
+            if (guess < targetNumber) System.out.println("Close, but too low! Try again. >_<");
+            if (guess > targetNumber) System.out.println("Omg no! Too high! Try again. >_<");
+            if (guess == targetNumber) {
+                guessedCorrectly = true;
+                System.out.println("Congratulations! You guessed the number " + targetNumber + " correctly in " + attempts + " attempts! >_<");
+
+                totalGamesPlayed++;
+                totalGuesses+= attempts;
+                minGuesses = Math.min(minGuesses, attempts);
+                maxGuesses = Math.max(maxGuesses, attempts);
+            }
         }
     }
 
     private static int generateRandomNumber(int min, int max) {
         return random.nextInt((max - min) + 1) + min;
+    }
+
+    private static int getValidGuess(int min, int max) {
+        int guess = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.print("Enter your guess (" + min + " - " + max + "): ");
+            try {
+                guess = scanner.nextInt();
+                if (guess < min || guess > max) {
+                    System.out.println("Please enter a number between " + min + " and " + max + ".");
+                } else {
+                    validInput = true;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
+        }
+
+        return guess;
     }
 }
