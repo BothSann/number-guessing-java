@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
+
     private static int totalGamesPlayed = 0;
     private static int minGuesses = Integer.MAX_VALUE;
     private static int maxGuesses = 0;
@@ -36,7 +37,7 @@ public class Main {
         boolean guessedCorrectly = false;
 
         System.out.println("\n--- New Game ---");
-        System.out.println("I'm thinking of a number between " + minRange + " and " + maxRange + ">_<");
+        System.out.println("I'm thinking of a number between " + minRange + " and " + maxRange + " >_<");
         System.out.println("Try to guess it! >_<");
 
         while (!guessedCorrectly) {
